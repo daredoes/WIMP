@@ -56,16 +56,12 @@ class weed:
         if self.type in "INDICA" or self.type in "SATIVA" or self.type in "HYBRID":
             return "Name: " + self.name + "\nType: " + self.type + "\nGram: " + self.gram + " \nEighth: " + self.eighth + " \nQuarter: " + self.quarter + \
                    "\nHalf: " + self.half + "\nOz: " + self.oz + ""
-        if self.type == "NA":
-            return ""
-
         if self.type == "CONCENTRATE":
             return "Name: " + self.name + "\nType: " + self.type + "\nHalf-Gram: " + self.half_gram + "\nGram: " + self.gram
         if self.type == "EDIBLE" or self.type == "DRINK" or self.type == "PREROLL":
             return "Name: " + self.name + "\nType: " + self.type + "\nUnit: " + self.unit
         if self.type == "WAX":
             return "Name: " + self.name + "\nType: " + self.type + "\nHalf-Gram: " + self.half_gram + "\nGram: " + self.gram
-        return self.gram
 
 #Get Prices from Lists
 class dispensary:
@@ -591,8 +587,11 @@ while True:
         print()
         print("Example Answer: 2")
         inp = input()
+        #Set Lowest Mode Dispensary and Price of requested amount
         m.set_lowest_mode_dispensary_and_price(inp)
+        #Retrieves Lowest Price
         lowest = m.get_lowest_mode_price()
+        #Retrieves Dispensary
         disp = m.get_lowest_mode_dispensary()
         if lowest != "NA" or lowest != "":
             print("Lowest Mode: " + lowest)
@@ -605,7 +604,7 @@ while True:
 
     print("Use same data again? y/n")
     inp = input().lower()
-    if inp == "n":
+    if inp != "y" or inp != "yes":
         break
     else:
         print()
