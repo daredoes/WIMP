@@ -4,6 +4,8 @@ __author__ = 'Daniel A. R. Evans'
 from urllib.request import urlopen
 from tkinter import *
 
+import cherrypy
+
 #SAMPLE LINK
 #https://weedmaps.com/dispensaries/in/california/east-bay
 
@@ -690,6 +692,7 @@ while True:
                     print("Lowest Mode: " + lowest)
                     print("Available at " + disp[0].get_name())
                     print(disp[0].get_url())
+                    inp = ""
                     break
 
                 else:
@@ -769,7 +772,7 @@ while True:
             break
         print("Use same data again? y/n")
         inp = input().lower()
-        if inp != "y" or inp != "yes":
+        if inp != "y":
             break
         else:
             print()
@@ -777,8 +780,4 @@ while True:
             inp = input()
     break
 
-#Comment Section`
-#Strains missing any cost besides OZ have it filled in by the next amount causing incorrect numbers
-#Need to fix get_prices
-
-#TOO MANY OBJECTS GETTING PRINTED ON PRINT DISPENSARY`
+#Comment Section
