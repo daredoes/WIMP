@@ -92,7 +92,7 @@ class dispensary:
         if input == "weed":
             for item in self.grass:
                 if item.get_type() == "SATIVA" or item.get_type() == "INDICA" or item.get_type() == "HYBRID":
-                    list_to_print.append(item())
+                    list_to_print.append(item)
         if input == "wax":
             for item in self.grass:
                 if item.get_type() == "WAX":
@@ -479,13 +479,11 @@ class dispensary:
 
 class main:
     disps = []
-    lowest_mode_disp = ["a"]
+    lowest_mode_disp = []
     lowest_mode_requested_price = ""
 
     def set_lowest_mode_dispensary_and_price(self, inp):
-        #low = "10000"
-        disp = ["a"]
-        var = "NA"
+        self.lowest_mode_disp = []
 
         if inp == "1":
             self.get_lowest_mode_gram(self.disps)
@@ -574,7 +572,10 @@ class main:
             a = int(item.get_mode_gram())
             if a < low:
                 low = a
-        self.lowest_mode_disp[0] = (item)
+
+        for item in stores:
+            if low == int(item.get_mode_gram()):
+                self.lowest_mode_disp.append(item)
         self.lowest_mode_requested_price = low.__str__()
 
     def get_lowest_mode_eighth(self, stores = [], *args):
@@ -584,7 +585,10 @@ class main:
             a = int(item.get_mode_eighth())
             if a < low:
                 low = a
-        self.lowest_mode_disp[0] = (item)
+                print(a)
+        for item in stores:
+            if low == int(item.get_mode_eighth()):
+                self.lowest_mode_disp.append(item)
         self.lowest_mode_requested_price = low.__str__()
 
     def get_lowest_mode_quarter(self, stores = [], *args):
@@ -594,7 +598,9 @@ class main:
             a = int(item.get_mode_quarter())
             if a < low:
                 low = a
-        self.lowest_mode_disp[0] = (item)
+        for item in stores:
+            if low == int(item.get_mode_quarter()):
+                self.lowest_mode_disp.append(item)
         self.lowest_mode_requested_price = low.__str__()
 
     def get_lowest_mode_half(self, stores = [], *args):
@@ -604,7 +610,9 @@ class main:
             a = int(item.get_mode_half())
             if a < low:
                 low = a
-        self.lowest_mode_disp[0] = (item)
+        for item in stores:
+            if low == int(item.get_mode_half()):
+                self.lowest_mode_disp.append(item)
         self.lowest_mode_requested_price = low.__str__()
 
     def get_lowest_mode_oz(self, stores = [], *args):
@@ -614,7 +622,9 @@ class main:
             a = int(item.get_mode_oz())
             if a < low:
                 low = a
-        self.lowest_mode_disp[0] = (item)
+        for item in stores:
+            if low == int(item.get_mode_oz()):
+                self.lowest_mode_disp.append(item)
         self.lowest_mode_requested_price = low.__str__()
 
     def get_lowest_mode_half_gram(self, stores = [], *args):
@@ -624,7 +634,9 @@ class main:
             a = int(item.get_mode_half_gram())
             if a < low:
                 low = a
-        self.lowest_mode_disp[0] = (item)
+        for item in stores:
+            if low == int(item.get_mode_half_gram()):
+                self.lowest_mode_disp.append(item)
         self.lowest_mode_requested_price = low.__str__()
 
     def get_lowest_mode_unit(self, stores = [], *args):
@@ -634,7 +646,9 @@ class main:
             a = int(item.get_mode_unit())
             if a < low:
                 low = a
-        self.lowest_mode_disp[0] = (item)
+        for item in stores:
+            if low == int(item.get_mode_unit()):
+                self.lowest_mode_disp.append(item)
         self.lowest_mode_requested_price = low.__str__()
 
     def __init__(self, link):
@@ -688,13 +702,16 @@ while True:
                 lowest = m.get_lowest_mode_price()
                 #Retrieves Dispensary
                 disp = m.get_lowest_mode_dispensary()
-                if lowest != "NA" or lowest != "":
-                    print("Lowest Mode: " + lowest)
-                    print("Available at " + disp[0].get_name())
-                    print(disp[0].get_url())
-                    inp = ""
+                if lowest != "NA":
+                    for item in disp:
+                        if lowest != "NA" or lowest != "":
+                            print("Lowest Mode: " + lowest)
+                            print("Available at " + item.get_name())
+                            print(item.get_url())
+                            inp = ""
+                        elif lowest == "NA":
+                            print("That amount does not exist at any indexed dispensary")
                     break
-
                 else:
                     print("You did not enter a number 1-5")
 
