@@ -84,6 +84,71 @@ class dispensary:
     def __iter__(self):
         return self
 
+    def print_menu_list(self, input):
+        list_to_print = []
+
+        if input == "weed":
+            for item in self.grass:
+                if item.get_type() == "SATIVA" or item.get_type() == "INDICA" or item.get_type() == "HYBRID":
+                    list_to_print.append(item())
+        if input == "wax":
+            for item in self.grass:
+                if item.get_type() == "WAX":
+                    list_to_print.append(item)
+        if input == "concentrate":
+            for item in self.grass:
+                if item.get_type() == "CONCENTRATE":
+                    list_to_print.append(item)
+        if input == "edible":
+            for item in self.grass:
+                if item.get_type() == "EDIBLE":
+                    list_to_print.append(item)
+        if input == "preroll":
+            for item in self.grass:
+                if item.get_type() == "PREROLL":
+                    list_to_print.append(item)
+        if input == "clone":
+            for item in self.grass:
+                if item.get_type() == "CLONE":
+                    list_to_print.append(item)
+        if input == "drink":
+            for item in self.grass:
+                if item.get_type() == "DRINK":
+                    list_to_print.append(item)
+        if input == "topical":
+            for item in self.grass:
+                if item.get_type() == "TOPICALS":
+                    list_to_print.append(item)
+        if input == "seed":
+            for item in self.grass:
+                if item.get_type() == "SEED":
+                    list_to_print.append(item)
+        if input == "tincture":
+            for item in self.grass:
+                if item.get_type() == "TINCTURE":
+                    list_to_print.append(item)
+
+        print(self.name)
+        print(self.get_url())
+        print()
+        for item in list_to_print:
+            print(item.get_name())
+            print(item.get_type())
+            if item.get_type() == "WAX" or item.get_type() == "Concentrate":
+                print("$" + item.get_half_gram() + " .5G")
+                print("$" + item.get_gram() + " G")
+            elif item.get_type() == "SATIVA" or item.get_type() == "INDICA" or item.get_type() == "HYBRID":
+                print("$" + item.get_gram() + " G")
+                print("$" + item.get_eighth() + " 1/8OZ")
+                print("$" + item.get_quarter() + " 1/4OZ")
+                print("$" + item.get_half() + " 1/2OZ")
+                print("$" + item.get_oz() + " OZ")
+            else:
+                print("$" + item.get_unit() + " Each")
+            print()
+            print()
+
+
      #Calculates Mode Values in a list
     def mode(self, list = [], *args):
         top = 0
@@ -157,10 +222,13 @@ class dispensary:
             gString = item.partition('"price_half_gram">')
             if gString != "":
                 gNum = gString[2].partition('"price">')
-                gNum = gNum[2].partition('<')
-                if gNum[0].strip() != "":
-                    hg = gNum[0].strip()
+                if "price_gram" not in gNum[0]:
+                    gNum = gNum[2].partition('<')
+                    if gNum[0].strip() != "":
+                        hg = gNum[0].strip()
 
+                    else:
+                        hg = "NA"
                 else:
                     hg = "NA"
 
@@ -168,10 +236,13 @@ class dispensary:
             gString = item.partition('"price_gram">')
             if gString != "":
                 gNum = gString[2].partition('"price">')
-                gNum = gNum[2].partition('<')
-                if gNum[0].strip():
-                    g = gNum[0].strip()
+                if "price_eighth" not in gNum[0]:
+                    gNum = gNum[2].partition('<')
+                    if gNum[0].strip():
+                        g = gNum[0].strip()
 
+                    else:
+                        g = "NA"
                 else:
                     g = "NA"
 
@@ -179,10 +250,13 @@ class dispensary:
             gString = item.partition('"price_eighth">')
             if gString != "":
                 gNum = gString[2].partition('"price">')
-                gNum = gNum[2].partition('<')
-                if gNum[0].strip():
-                    e = gNum[0].strip()
+                if "price_quarter" not in gNum[0]:
+                    gNum = gNum[2].partition('<')
+                    if gNum[0].strip():
+                        e = gNum[0].strip()
 
+                    else:
+                        e = "NA"
                 else:
                     e = "NA"
 
@@ -190,10 +264,13 @@ class dispensary:
             gString = item.partition('"price_quarter">')
             if gString != "":
                 gNum = gString[2].partition('"price">')
-                gNum = gNum[2].partition('<')
-                if gNum[0].strip():
-                    q = gNum[0].strip()
+                if "price_half" not in gNum[0]:
+                    gNum = gNum[2].partition('<')
+                    if gNum[0].strip():
+                        q = gNum[0].strip()
 
+                    else:
+                        q = "NA"
                 else:
                     q = "NA"
 
@@ -201,13 +278,15 @@ class dispensary:
             gString = item.partition('"price_half_ounce">')
             if gString != "":
                 gNum = gString[2].partition('"price">')
-                gNum = gNum[2].partition('<')
-                if gNum[0].strip():
-                    h = gNum[0].strip()
+                if "price_ounce" not in gNum[0]:
+                    gNum = gNum[2].partition('<')
+                    if gNum[0].strip():
+                        h = gNum[0].strip()
 
+                    else:
+                        h = "NA"
                 else:
                     h = "NA"
-
             #Price Oz
             gString = item.partition('"price_ounce">')
             if gString != "":
@@ -407,15 +486,15 @@ class main:
         var = "NA"
 
         if inp == "1":
-            var = self.get_lowest_mode_gram(self.disps)
+            self.get_lowest_mode_gram(self.disps)
         if inp == "2":
-            var = self.get_lowest_mode_eighth(self.disps)
+            self.get_lowest_mode_eighth(self.disps)
         if inp == "3":
-            var = self.get_lowest_mode_quarter(self.disps)
+            self.get_lowest_mode_quarter(self.disps)
         if inp == "4":
-            var = self.get_lowest_mode_half(self.disps)
+            self.get_lowest_mode_half(self.disps)
         if inp == "5":
-            var = self.get_lowest_mode_oz(self.disps)
+            self.get_lowest_mode_oz(self.disps)
 
 
     def get_lowest_mode_dispensary(self):
@@ -562,12 +641,12 @@ class main:
 
 while True:
     print("Please enter a weedmaps.com region link")
+    print("Example: https://weedmaps.com/dispensaries/in/california/east-bay")
     inp = input()
     if 'weedmaps.com' in inp:
-        break;
+        break
     else:
         print("Please enter a valid link")
-        print("Example: https://weedmaps.com/dispensaries/in/california/east-bay")
         print()
 m = main(inp)
 
@@ -578,38 +657,128 @@ while True:
         print()
         print("Welcome to W.I.M.P")
         print()
-        print("Please pick an amount to search index by lowest mode price for:")
-        print("1. Gram")
-        print("2. Eighth")
-        print("3. Quarter")
-        print("4. Half")
-        print("5. Oz")
+        print("Weed")
+        print("Indexing")
+        print("Menu")
+        print("Program")
         print()
-        print("Example Answer: 2")
+        print("Pick an option:")
+        print("1. Get lowest mode price")
+        print("2. Get lowest price")
+        print("3. Print Dispensary Menu")
+        print("4. Quit")
         inp = input()
-        #Set Lowest Mode Dispensary and Price of requested amount
-        m.set_lowest_mode_dispensary_and_price(inp)
-        #Retrieves Lowest Price
-        lowest = m.get_lowest_mode_price()
-        #Retrieves Dispensary
-        disp = m.get_lowest_mode_dispensary()
-        if lowest != "NA" or lowest != "":
-            print("Lowest Mode: " + lowest)
-            print("Available at " + disp[0].get_name())
-            print(disp[0].get_url())
+        if inp == "1":
+            while True:
+                print()
+                print("Please pick an amount to search index by lowest mode price for:")
+                print("1. Gram")
+                print("2. Eighth")
+                print("3. Quarter")
+                print("4. Half")
+                print("5. Oz")
+                print()
+                print("Example Answer: 2")
+                inp = input()
+                #Set Lowest Mode Dispensary and Price of requested amount
+                m.set_lowest_mode_dispensary_and_price(inp)
+                #Retrieves Lowest Price
+                lowest = m.get_lowest_mode_price()
+                #Retrieves Dispensary
+                disp = m.get_lowest_mode_dispensary()
+                if lowest != "NA" or lowest != "":
+                    print("Lowest Mode: " + lowest)
+                    print("Available at " + disp[0].get_name())
+                    print(disp[0].get_url())
+                    break
+
+                else:
+                    print("You did not enter a number 1-5")
+
+        if inp == "2":
+            while True:
+                print()
+                print("Please pick an amount to search index by lowest price for:")
+                print("1. Gram")
+                print("2. Eighth")
+                print("3. Quarter")
+                print("4. Half")
+                print("5. Oz")
+                print()
+                print("Example Answer: 2")
+                inp = input()
+                #FINISH THIS CODE
+
+        if inp == "3":
+            while True:
+                print()
+                print("Pick a dispensary:")
+                print()
+                var = 1
+                for item in m.get_dispensaries():
+                    print(var.__str__() + ". " + item.get_name())
+                    var += 1
+                chosen_dispensary = int(input())-1
+
+                print()
+                print("Pick a category:")
+                print()
+                print("1. Weed")
+                print("2. Wax")
+                print("3. Concentrates")
+                print("4. Edibles")
+                print("5. Prerolls")
+                print("6. Drinks")
+                print("7. Seeds")
+                print("8. Clones")
+                print("9. Topicals")
+                print("10. Tinctures")
+                inp = input()
+
+                if inp == "1":
+                    inp = "weed"
+                if inp == "2":
+                    inp = "wax"
+                if inp == "3":
+                    inp = "concentrates"
+                if inp == "4":
+                    inp = "edible"
+                if inp == "5":
+                    inp = "preroll"
+                if inp == "6":
+                    inp = "drink"
+                if inp == "7":
+                    inp = "seed"
+                if inp == "8":
+                    inp = "clone"
+                if inp == "9":
+                    inp = "topical"
+                if inp == "10":
+                    inp = "tincture"
+
+                #Make Method to print list of strains at dispensary
+                print()
+                m.get_dispensaries()[chosen_dispensary].print_menu_list(inp)
+
+
+                print("Pick another dispensary? y/n")
+                inp = input()
+                if inp.lower() != "y":
+                    break
+        if inp == "4":
             break
-
+        print("Use same data again? y/n")
+        inp = input().lower()
+        if inp != "y" or inp != "yes":
+            break
         else:
-            print("You did not enter a number 1-5")
+            print()
+            print("Press Enter to Continue")
+            inp = input()
+    break
 
-    print("Use same data again? y/n")
-    inp = input().lower()
-    if inp != "y" or inp != "yes":
-        break
-    else:
-        print()
-        print()
-
-#Comment Section
+#Comment Section`
 #Strains missing any cost besides OZ have it filled in by the next amount causing incorrect numbers
 #Need to fix get_prices
+
+#TOO MANY OBJECTS GETTING PRINTED ON PRINT DISPENSARY`
