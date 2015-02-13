@@ -619,12 +619,12 @@ class main:
         low = 100000
 
         for item in stores:
-            a = int(math.floor(item.get_mode_gram()))
+            a = float(item.get_mode_gram())
             if 0 < a < low:
                 low = a
 
         for item in stores:
-            if low == int(item.get_mode_gram()):
+            if low == float(item.get_mode_gram()):
                 self.lowest_mode_disp.append(item)
         self.lowest_mode_requested_price = low.__str__()
 
@@ -632,11 +632,11 @@ class main:
         low = 100000
 
         for item in stores:
-            a = int(math.floor(item.get_mode_eighth()))
+            a = float(item.get_mode_eighth())
             if 0 < a < low:
                 low = a
         for item in stores:
-            if low == int(item.get_mode_eighth()):
+            if low == float(item.get_mode_eighth()):
                 self.lowest_mode_disp.append(item)
         self.lowest_mode_requested_price = low.__str__()
 
@@ -644,11 +644,11 @@ class main:
         low = 100000
 
         for item in stores:
-            a = int(math.floor(item.get_mode_quarter()))
+            a = float(item.get_mode_quarter())
             if 0 < a < low:
                 low = a
         for item in stores:
-            if low == int(item.get_mode_quarter()):
+            if low == float(item.get_mode_quarter()):
                 self.lowest_mode_disp.append(item)
         self.lowest_mode_requested_price = low.__str__()
 
@@ -656,11 +656,11 @@ class main:
         low = 100000
 
         for item in stores:
-            a = int(math.floor(item.get_mode_half()))
+            a = float(item.get_mode_half())
             if 0 < a < low:
                 low = a
         for item in stores:
-            if low == int(item.get_mode_half()):
+            if low == float(item.get_mode_half()):
                 self.lowest_mode_disp.append(item)
         self.lowest_mode_requested_price = low.__str__()
 
@@ -668,11 +668,11 @@ class main:
         low = 100000
 
         for item in stores:
-            a = int(math.floor(item.get_mode_oz()))
+            a = float(item.get_mode_oz())
             if 0 < 0 < a < low:
                 low = a
         for item in stores:
-            if low == int(item.get_mode_oz()):
+            if low == float(item.get_mode_oz()):
                 self.lowest_mode_disp.append(item)
         self.lowest_mode_requested_price = low.__str__()
 
@@ -680,11 +680,11 @@ class main:
         low = 100000
 
         for item in stores:
-            a = int(math.floor(item.get_mode_half_gram()))
+            a = float(item.get_mode_half_gram())
             if 0 < a < low:
                 low = a
         for item in stores:
-            if low == int(item.get_mode_half_gram()):
+            if low == float(item.get_mode_half_gram()):
                 self.lowest_mode_disp.append(item)
         self.lowest_mode_requested_price = low.__str__()
 
@@ -692,11 +692,11 @@ class main:
         low = 100000
 
         for item in stores:
-            a = int(math.floor(item.get_mode_unit()))
+            a = float(item.get_mode_unit())
             if 0 < a < low:
                 low = a
         for item in stores:
-            if low == int(item.get_mode_unit()):
+            if low == float(item.get_mode_unit()):
                 self.lowest_mode_disp.append(item)
         self.lowest_mode_requested_price = low.__str__()
 
