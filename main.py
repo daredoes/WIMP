@@ -511,6 +511,10 @@ class main:
     lowest_mode_disp = []
     lowest_mode_requested_price = ""
 
+    def print_one_item(self, type):
+        for item in self.disps:
+            item.print_menu_list(type)
+
     def set_lowest_mode_dispensary_and_price(self, inp):
         self.lowest_mode_disp = []
 
@@ -707,8 +711,8 @@ while True:
         print("Program")
         print()
         print("Pick an option:")
-        print("1. Get lowest mode price")
-        print("2. Get lowest price")
+        print("1. Get Lowest Mode Price")
+        print("2. Print All of One Type")
         print("3. Print Dispensary Menu")
         print("4. Quit")
         inp = input()
@@ -746,16 +750,45 @@ while True:
         if inp == "2":
             while True:
                 print()
-                print("Please pick an amount to search index by lowest price for:")
-                print("1. Gram")
-                print("2. Eighth")
-                print("3. Quarter")
-                print("4. Half")
-                print("5. Oz")
-                print()
-                print("Example Answer: 2")
+                print("Please pick a type to print:")
+                print("1. Weed")
+                print("2. Wax")
+                print("3. Concentrates")
+                print("4. Edibles")
+                print("5. Prerolls")
+                print("6. Drinks")
+                print("7. Seeds")
+                print("8. Clones")
+                print("9. Topicals")
+                print("10. Tinctures")
                 inp = input()
-                #FINISH THIS CODE
+
+                if inp == "1":
+                    inp = "weed"
+                if inp == "2":
+                    inp = "wax"
+                if inp == "3":
+                    inp = "concentrates"
+                if inp == "4":
+                    inp = "edible"
+                if inp == "5":
+                    inp = "preroll"
+                if inp == "6":
+                    inp = "drink"
+                if inp == "7":
+                    inp = "seed"
+                if inp == "8":
+                    inp = "clone"
+                if inp == "9":
+                    inp = "topical"
+                if inp == "10":
+                    inp = "tincture"
+
+                m.print_one_item(inp)
+                print("Print a different item? y/n")
+                inp = input()
+                if inp != "y":
+                    break
 
         if inp == "3":
             while True:
