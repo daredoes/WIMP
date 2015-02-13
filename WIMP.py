@@ -5,6 +5,7 @@ import sys
 from tkinter import *
 from urllib.request import urlopen
 from getpass import getpass
+import math
 
 #SAMPLE LINK
 #https://weedmaps.com/dispensaries/in/california/east-bay
@@ -618,7 +619,7 @@ class main:
         low = 100000
 
         for item in stores:
-            a = int(item.get_mode_gram())
+            a = int(math.floor(item.get_mode_gram()))
             if 0 < a < low:
                 low = a
 
@@ -631,7 +632,7 @@ class main:
         low = 100000
 
         for item in stores:
-            a = int(item.get_mode_eighth())
+            a = int(math.floor(item.get_mode_eighth()))
             if 0 < a < low:
                 low = a
         for item in stores:
@@ -643,7 +644,7 @@ class main:
         low = 100000
 
         for item in stores:
-            a = int(item.get_mode_quarter())
+            a = int(math.floor(item.get_mode_quarter()))
             if 0 < a < low:
                 low = a
         for item in stores:
@@ -655,7 +656,7 @@ class main:
         low = 100000
 
         for item in stores:
-            a = int(item.get_mode_half())
+            a = int(math.floor(item.get_mode_half()))
             if 0 < a < low:
                 low = a
         for item in stores:
@@ -667,7 +668,7 @@ class main:
         low = 100000
 
         for item in stores:
-            a = int(item.get_mode_oz())
+            a = int(math.floor(item.get_mode_oz()))
             if 0 < 0 < a < low:
                 low = a
         for item in stores:
@@ -679,7 +680,7 @@ class main:
         low = 100000
 
         for item in stores:
-            a = int(item.get_mode_half_gram())
+            a = int(math.floor(item.get_mode_half_gram()))
             if 0 < a < low:
                 low = a
         for item in stores:
@@ -691,7 +692,7 @@ class main:
         low = 100000
 
         for item in stores:
-            a = int(item.get_mode_unit())
+            a = int(math.floor(item.get_mode_unit()))
             if 0 < a < low:
                 low = a
         for item in stores:
