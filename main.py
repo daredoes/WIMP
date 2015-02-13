@@ -86,7 +86,7 @@ class dispensary:
     def __iter__(self):
         return self
 
-    def print_menu_list(self, input):
+    def print_menu_list(self, input, file):
         list_to_print = []
 
         if input == "weed":
@@ -130,30 +130,45 @@ class dispensary:
                 if item.get_type() == "TINCTURE":
                     list_to_print.append(item)
 
-        print(self.name)
-        print(self.get_url())
-        print()
-        for item in list_to_print:
-            print(item.get_name())
-            print(item.get_type())
-            if item.get_type() == "WAX" or item.get_type() == "Concentrate":
-                print("$" + item.get_half_gram() + " .5G")
-                print("$" + item.get_gram() + " G")
-            elif item.get_type() == "SATIVA" or item.get_type() == "INDICA" or item.get_type() == "HYBRID":
-                if item.get_gram() != "NA":
-                    print("$" + item.get_gram() + " G")
-                if item.get_eighth() != "NA":
-                    print("$" + item.get_eighth() + " 1/8OZ")
-                if item.get_quarter() != "NA":
-                    print("$" + item.get_quarter() + " 1/4OZ")
-                if item.get_half() != "NA":
-                    print("$" + item.get_half() + " 1/2OZ")
-                if item.get_oz() != "NA":
-                    print("$" + item.get_oz() + " OZ")
-            else:
-                print("$" + item.get_unit() + " Each")
-            print()
-            print()
+        if list_to_print:
+            file.write(self.name)
+            file.write("\n")
+            file.write(self.get_url())
+            file.write("\n")
+            file.write("\n")
+
+            for item in list_to_print:
+                file.write(item.get_name())
+                file.write("\n")
+                file.write(item.get_type())
+                file.write("\n")
+                if item.get_type() == "WAX" or item.get_type() == "Concentrate":
+                    file.write("$" + item.get_half_gram() + " .5G")
+                    file.write("\n")
+                    file.write("$" + item.get_gram() + " G")
+                    file.write("\n")
+                elif item.get_type() == "SATIVA" or item.get_type() == "INDICA" or item.get_type() == "HYBRID":
+                    if item.get_gram() != "NA":
+                        file.write("$" + item.get_gram() + " G")
+                        file.write("\n")
+                    if item.get_eighth() != "NA":
+                        file.write("$" + item.get_eighth() + " 1/8OZ")
+                        file.write("\n")
+                    if item.get_quarter() != "NA":
+                        file.write("$" + item.get_quarter() + " 1/4OZ")
+                        file.write("\n")
+                    if item.get_half() != "NA":
+                        file.write("$" + item.get_half() + " 1/2OZ")
+                        file.write("\n")
+                    if item.get_oz() != "NA":
+                        file.write("$" + item.get_oz() + " OZ")
+                        file.write("\n")
+
+                else:
+                    file.write("$" + item.get_unit() + " Each")
+                    file.write("\n")
+                file.write("\n")
+                file.write("\n")
 
 
      #Calculates Mode Values in a list
@@ -511,9 +526,9 @@ class main:
     lowest_mode_disp = []
     lowest_mode_requested_price = ""
 
-    def print_one_item(self, type):
+    def print_one_item(self, type, file):
         for item in self.disps:
-            item.print_menu_list(type)
+            item.print_menu_list(type, file)
 
     def set_lowest_mode_dispensary_and_price(self, inp):
         self.lowest_mode_disp = []
@@ -697,7 +712,7 @@ while True:
         print("Please enter a valid link")
         print()
 m = main(inp)
-
+file = open("results.txt", "w+")
 while True:
 
     while True:
@@ -784,7 +799,9 @@ while True:
                 if inp == "10":
                     inp = "tincture"
 
-                m.print_one_item(inp)
+                m.print_one_item(inp, file)
+                print("Please check 'results.txt' in the folder you ran this program from.")
+                print()
                 print("Print a different item? y/n")
                 inp = input()
                 if inp != "y":
@@ -839,8 +856,8 @@ while True:
 
                 #Make Method to print list of strains at dispensary
                 print()
-                m.get_dispensaries()[chosen_dispensary].print_menu_list(inp)
-
+                m.get_dispensaries()[chosen_dispensary].print_menu_list(inp, file)
+                print("Please check 'results.txt' in the folder you ran this program from.")
 
                 print("Pick another dispensary? y/n")
                 inp = input()
