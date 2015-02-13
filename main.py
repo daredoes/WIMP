@@ -152,30 +152,30 @@ class dispensary:
 
 
      #Calculates Mode Values in a list
-    def mode(self, list = [], *args):
+    def mode(self, stuff=[], *args):
         top = 0
-        #Empty List. Why?
+        #Empty stuff. Why?
         mode_price = 0
-        for p in list:
-            if list.count(p) > top:
+        for p in stuff:
+            if stuff.count(p) > top:
 
-                top = list.count(p)
+                top = stuff.count(p)
                 mode_price = p
         return mode_price
 
     #Calculates the Highest Value in a list
-    def high(self, list = [], *args):
+    def high(self, stuff=[], *args):
         top = 0
-        for p in list:
+        for p in stuff:
             if p > top:
 
                 top = p
         return top
 
     #Calculates the Lowest Value in a list
-    def low(self, list = [], *args):
+    def low(self, stuff=[], *args):
         low = 10000000
-        for p in list:
+        for p in stuff:
             if p < low:
 
                 low = p
@@ -361,10 +361,10 @@ class dispensary:
     def get_preroll(self):
         return self.preroll
 
-    def sort_by_amount(self, amount, list = [], *args):
+    def sort_by_amount(self, amount, stuff=[], *args):
         prices = []
         val = "NA"
-        for flower in list:
+        for flower in stuff:
             if amount == "gram":
                 val = flower.get_gram()
             if amount == "eighth":
@@ -386,36 +386,52 @@ class dispensary:
 
 
     #Gets the mode price based on the given amount
-    def get_mode_price(self, amount, list = [], *args):
-        prices = self.sort_by_amount(amount,list)
+    def get_mode_price(self, amount, stuff=[], *args):
+        prices = self.sort_by_amount(amount,stuff)
         return self.mode(prices)
 
-    def get_high_price(self, amount, list = [], *args):
-        prices = self.sort_by_amount(amount,list)
+    def get_high_price(self, amount, stuff=[], *args):
+        prices = self.sort_by_amount(amount,stuff)
         return self.high(prices)
 
-    def get_low_price(self, amount, list = [], *args):
-        prices = self.sort_by_amount(amount, list)
+    def get_low_price(self, amount, stuff=[], *args):
+        prices = self.sort_by_amount(amount, stuff)
         return self.low(prices)
 
     def get_mode_gram(self):
-        sweed = self.get_weed()
-        return self.get_mode_price("gram", sweed)
+        weed = []
+        for item in self.get_weed():
+            if item.get_type().upper() == "SATIVA" or item.get_type().upper() == "INDICA" or item.get_type().upper() == "HYBRID":
+                weed.append(item)
+
+        return self.get_mode_price("gram", weed)
 
     def get_mode_eighth(self):
-        weed = self.get_weed()
+        weed = []
+        for item in self.get_weed():
+            if item.get_type().upper() == "SATIVA" or item.get_type().upper() == "INDICA" or item.get_type().upper() == "HYBRID":
+                weed.append(item)
         return self.get_mode_price("eighth", weed)
 
     def get_mode_quarter(self):
-        weed = self.get_weed()
+        weed = []
+        for item in self.get_weed():
+            if item.get_type().upper() == "SATIVA" or item.get_type().upper() == "INDICA" or item.get_type().upper() == "HYBRID":
+                weed.append(item)
         return self.get_mode_price("quarter", weed)
 
     def get_mode_half(self):
-        weed = self.get_weed()
+        weed = []
+        for item in self.get_weed():
+            if item.get_type().upper() == "SATIVA" or item.get_type().upper() == "INDICA" or item.get_type().upper() == "HYBRID":
+                weed.append(item)
         return self.get_mode_price("half", weed)
 
     def get_mode_oz(self):
-        weed = self.get_weed()
+        weed = []
+        for item in self.get_weed():
+            if item.get_type().upper() == "SATIVA" or item.get_type().upper() == "INDICA" or item.get_type().upper() == "HYBRID":
+                weed.append(item)
         return self.get_mode_price("oz", weed)
 
     def sort_store(self, items = [], *args):
@@ -578,14 +594,18 @@ class main:
                 self.lowest_mode_disp.append(item)
         self.lowest_mode_requested_price = low.__str__()
 
-    def get_lowest_mode_eighth(self, stores = [], *args):
+    def get_lowest_mode_eighth(self, stores=[], *args):
         low = 100000
 
         for item in stores:
+            print(item.get_name())
+            print(item.get_mode_eighth())
             a = int(item.get_mode_eighth())
+            print(low.__str__() + ":" + a.__str__())
+            print("------")
             if a < low:
+                print(low.__str__() + ":" + a.__str__())
                 low = a
-                print(a)
         for item in stores:
             if low == int(item.get_mode_eighth()):
                 self.lowest_mode_disp.append(item)
