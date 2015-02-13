@@ -1,0 +1,2 @@
+py WIMP.py
+pause
