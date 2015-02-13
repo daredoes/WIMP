@@ -885,5 +885,5 @@ while True:
             print("Press Enter to Continue")
             inp = input()
     break
-
+file.close()
 #Comment Section
