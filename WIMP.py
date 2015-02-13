@@ -703,6 +703,16 @@ class main:
         self.disps = self.get_dispensary_urls(link)
 
 while True:
+    print("Please enter the password:")
+    inp = input()
+    if inp == "419":
+        break
+    else:
+        print("Wrong Password")
+        print("Please Try Again")
+        print()
+        print()
+while True:
     print("Please enter a weedmaps.com region link")
     print("Example: https://weedmaps.com/dispensaries/in/california/east-bay")
     inp = input()
