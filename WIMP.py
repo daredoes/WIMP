@@ -6,8 +6,6 @@ from tkinter import *
 from urllib.request import urlopen
 from getpass import getpass
 
-import cherrypy
-
 #SAMPLE LINK
 #https://weedmaps.com/dispensaries/in/california/east-bay
 
