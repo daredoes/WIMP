@@ -140,11 +140,16 @@ class dispensary:
                 print("$" + item.get_half_gram() + " .5G")
                 print("$" + item.get_gram() + " G")
             elif item.get_type() == "SATIVA" or item.get_type() == "INDICA" or item.get_type() == "HYBRID":
-                print("$" + item.get_gram() + " G")
-                print("$" + item.get_eighth() + " 1/8OZ")
-                print("$" + item.get_quarter() + " 1/4OZ")
-                print("$" + item.get_half() + " 1/2OZ")
-                print("$" + item.get_oz() + " OZ")
+                if item.get_gram() != "NA":
+                    print("$" + item.get_gram() + " G")
+                if item.get_eighth() != "NA":
+                    print("$" + item.get_eighth() + " 1/8OZ")
+                if item.get_quarter() != "NA":
+                    print("$" + item.get_quarter() + " 1/4OZ")
+                if item.get_half() != "NA":
+                    print("$" + item.get_half() + " 1/2OZ")
+                if item.get_oz() != "NA":
+                    print("$" + item.get_oz() + " OZ")
             else:
                 print("$" + item.get_unit() + " Each")
             print()
@@ -399,40 +404,40 @@ class dispensary:
         return self.low(prices)
 
     def get_mode_gram(self):
-        weed = []
-        for item in self.get_weed():
-            if item.get_type().upper() == "SATIVA" or item.get_type().upper() == "INDICA" or item.get_type().upper() == "HYBRID":
-                weed.append(item)
-
-        return self.get_mode_price("gram", weed)
+        return self.get_mode_price("gram", self.weed)
 
     def get_mode_eighth(self):
-        weed = []
-        for item in self.get_weed():
-            if item.get_type().upper() == "SATIVA" or item.get_type().upper() == "INDICA" or item.get_type().upper() == "HYBRID":
-                weed.append(item)
-        return self.get_mode_price("eighth", weed)
+        return self.get_mode_price("eighth", self.weed)
 
     def get_mode_quarter(self):
-        weed = []
-        for item in self.get_weed():
-            if item.get_type().upper() == "SATIVA" or item.get_type().upper() == "INDICA" or item.get_type().upper() == "HYBRID":
-                weed.append(item)
-        return self.get_mode_price("quarter", weed)
+        return self.get_mode_price("quarter", self.weed)
 
     def get_mode_half(self):
-        weed = []
-        for item in self.get_weed():
-            if item.get_type().upper() == "SATIVA" or item.get_type().upper() == "INDICA" or item.get_type().upper() == "HYBRID":
-                weed.append(item)
-        return self.get_mode_price("half", weed)
+        return self.get_mode_price("half", self.weed)
 
     def get_mode_oz(self):
-        weed = []
-        for item in self.get_weed():
-            if item.get_type().upper() == "SATIVA" or item.get_type().upper() == "INDICA" or item.get_type().upper() == "HYBRID":
-                weed.append(item)
-        return self.get_mode_price("oz", weed)
+        return self.get_mode_price("oz", self.weed)
+
+    def separate_item(self, type, items=[], *args):
+        returned = []
+        for item in items:
+            if item.get_type().upper() == "SATIVA" or item.get_type().upper() == "INDICA" or item.get_type().upper() == "HYBRID" and type == "weed":
+                returned.append(item)
+            if item.get_type() == "WAX" and type == "wax":
+                returned.append(item)
+            if item.get_type() == "DRINK" and type == "drink":
+                returned.append(item)
+            if item.get_type() == "CLONE" and type == "clone":
+                returned.append(item)
+            if item.get_type() == "EDIBLE" and type == "edible":
+                returned.append(item)
+            if item.get_type() == "TOPICAL" and type == "topical":
+                returned.append(item)
+            if item.get_type() == "PREROLL" and type == "preroll":
+                returned.append(item)
+            if item.get_type() == "TINCTURE" and type == "tincture":
+                returned.append(item)
+        return returned
 
     def sort_store(self, items = [], *args):
         for item in items:
@@ -491,7 +496,15 @@ class dispensary:
             except:
                 break
         self.grass = self.get_prices(menu)
-        self.sort_store(self.grass)
+        self.weed = self.separate_item("weed", self.grass)
+        self.wax = self.separate_item("wax", self.grass)
+        self.concentrate = self.separate_item("concentrate", self.grass)
+        self.clone = self.separate_item("clone", self.grass)
+        self.drink = self.separate_item("drink", self.grass)
+        self.seeds = self.separate_item("seed", self.grass)
+        self.edibles = self.separate_item("edible", self.grass)
+
+
 
 class main:
     disps = []
@@ -586,7 +599,7 @@ class main:
 
         for item in stores:
             a = int(item.get_mode_gram())
-            if a < low:
+            if 0 < a < low:
                 low = a
 
         for item in stores:
@@ -598,13 +611,8 @@ class main:
         low = 100000
 
         for item in stores:
-            print(item.get_name())
-            print(item.get_mode_eighth())
             a = int(item.get_mode_eighth())
-            print(low.__str__() + ":" + a.__str__())
-            print("------")
-            if a < low:
-                print(low.__str__() + ":" + a.__str__())
+            if 0 < a < low:
                 low = a
         for item in stores:
             if low == int(item.get_mode_eighth()):
@@ -616,7 +624,7 @@ class main:
 
         for item in stores:
             a = int(item.get_mode_quarter())
-            if a < low:
+            if 0 < a < low:
                 low = a
         for item in stores:
             if low == int(item.get_mode_quarter()):
@@ -628,7 +636,7 @@ class main:
 
         for item in stores:
             a = int(item.get_mode_half())
-            if a < low:
+            if 0 < a < low:
                 low = a
         for item in stores:
             if low == int(item.get_mode_half()):
@@ -640,7 +648,7 @@ class main:
 
         for item in stores:
             a = int(item.get_mode_oz())
-            if a < low:
+            if 0 < 0 < a < low:
                 low = a
         for item in stores:
             if low == int(item.get_mode_oz()):
@@ -652,7 +660,7 @@ class main:
 
         for item in stores:
             a = int(item.get_mode_half_gram())
-            if a < low:
+            if 0 < a < low:
                 low = a
         for item in stores:
             if low == int(item.get_mode_half_gram()):
@@ -664,7 +672,7 @@ class main:
 
         for item in stores:
             a = int(item.get_mode_unit())
-            if a < low:
+            if 0 < a < low:
                 low = a
         for item in stores:
             if low == int(item.get_mode_unit()):
