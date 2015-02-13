@@ -1,8 +1,10 @@
 
 __author__ = 'Daniel A. R. Evans'
 
-from urllib.request import urlopen
+import sys
 from tkinter import *
+from urllib.request import urlopen
+from getpass import getpass
 
 import cherrypy
 
@@ -555,7 +557,10 @@ class main:
     #Index all of the dispensaries through HTTP
     def raid_dispensaries(self, url = [], *args):
         dip = []
+        var = 1
         for link in url:
+            print(var.__str__() + " out of " + len(url).__str__())
+            var += 1
             dip.append(dispensary(link))
         return dip
 
@@ -605,8 +610,6 @@ class main:
         while line:
                 line = line.partition('"')
                 urls.append(line[0])
-                #Print URL
-                print(line[0])
                 line = line[2].partition('"url":"')
                 line = line[2]
 
@@ -703,8 +706,7 @@ class main:
         self.disps = self.get_dispensary_urls(link)
 
 while True:
-    print("Please enter the password:")
-    inp = input()
+    inp = getpass()
     if inp == "419":
         break
     else:
