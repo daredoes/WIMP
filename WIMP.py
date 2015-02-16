@@ -586,9 +586,10 @@ class main:
         b.pack()
 
         root.mainloop()
-    def get_dispensary_urls(self, page):
+    def get_dispensary_urls(self, page=[], *args):
         #"http://www.weedmaps.com/" region link
-        link = page
+        for item in page:
+            link = item
         #Load the webpage
         web = urlopen(link)
         #Grab the document
@@ -700,7 +701,7 @@ class main:
                 self.lowest_mode_disp.append(item)
         self.lowest_mode_requested_price = low.__str__()
 
-    def __init__(self, link):
+    def __init__(self, link=[], *args):
         #self.gui()
         self.disps = self.get_dispensary_urls(link)
 
@@ -713,17 +714,34 @@ while True:
         print("Please Try Again")
         print()
         print()
+links = []
+regions = open("regions.txt", "a+")
 while True:
-    print("Please enter a weedmaps.com region link")
+    print("Please enter a weedmaps.com region link or enter '1' to use regions.txt")
     print("Example: https://weedmaps.com/dispensaries/in/california/east-bay")
     inp = input()
-    if 'weedmaps.com' in inp:
-        break
+    if inp == "1":
+        for line in regions:
+            if 'weedmaps.com' in line:
+                links.append(line)
+                break
+            else:
+                print("Please enter a valid link")
+                print()
+        if links:
+            break
+        else:
+            print("No link was found")
+            print()
+
     else:
-        print("Please enter a valid link")
-        print()
-m = main(inp)
-file = open("results.txt", "w+")
+        if 'weedmaps.com' in inp:
+            links.append(inp)
+            break
+        else:
+            print("Please enter a valid link")
+            print()
+m = main(links)
 while True:
 
     while True:
@@ -773,6 +791,7 @@ while True:
                 else:
                     print("You did not enter a number 1-5")
 
+        file = open("results.txt", "w+")
         if inp == "2":
             while True:
                 print()
@@ -874,6 +893,7 @@ while True:
                 inp = input()
                 if inp.lower() != "y":
                     break
+        file.close()
         if inp == "4":
             break
         print("Use same data again? y/n")
@@ -885,5 +905,4 @@ while True:
             print("Press Enter to Continue")
             inp = input()
     break
-file.close()
 #Comment Section
