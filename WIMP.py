@@ -3,6 +3,7 @@ __author__ = 'Daniel A. R. Evans'
 
 import sys
 from tkinter import *
+import os.path
 from tkinter import ttk
 from urllib.request import urlopen
 from getpass import getpass
@@ -721,7 +722,10 @@ while True:
         print()
 links = []
 reg_links = []
-regions = open("regions.txt", "r").readlines()
+if os.path.isfile("regions.txt"):
+    regions = open("regions.txt", "r").readlines()
+else:
+    regions = open("regions.txt", "w+")
 for item in regions:
     reg_links.append(item.split('\n'))
 while True:
