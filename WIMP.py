@@ -3,6 +3,7 @@ __author__ = 'Daniel A. R. Evans'
 
 import sys
 from tkinter import *
+from tkinter import ttk
 from urllib.request import urlopen
 from getpass import getpass
 import math
@@ -571,9 +572,14 @@ class main:
         root = Tk()
         #Sets Title of Window
         root.wm_title("WeedMaps Indexer by DARE")
-        #root.resizable(width=FALSE, height=FALSE)
-        root.minsize(300, 300)
-        root.geometry("500x500")
+        mainframe = ttk.Frame(root, padding="3 3 12 12")
+        mainframe.grid(column=0, row=0, sticky=(N, W, E, S))
+        mainframe.columnconfigure(0, weight=1)
+        mainframe.rowconfigure(0, weight=1)
+        choice = ""
+
+        option_choice = ttk.Entry(mainframe, width=7, textvariable=choice)
+        option_choice.grid(column=2, row=1, sticky=(W, E))
 
         w = Label(root, text="WeedMaps Price Mapper")
         w.pack()
@@ -588,30 +594,29 @@ class main:
         root.mainloop()
     def get_dispensary_urls(self, page=[], *args):
         #"http://www.weedmaps.com/" region link
-        for item in page:
-            link = item
-        #Load the webpage
-        web = urlopen(link)
-        #Grab the document
-        web = web.read()
-        #Convert to string
-        web = web.decode("UTF-8")
-        #Remove filler characters
-        web = web.replace("&quot;", "")
-
-        #Get first url
-        line = web.partition('"url":"')
-        line = line[2].partition(":true}};")[0]
-
         #Stores urls
         urls = []
+        for item in page:
+            link = item
+            #Load the webpage
+            web = urlopen(link)
+            #Grab the document
+            web = web.read()
+            #Convert to string
+            web = web.decode("UTF-8")
+            #Remove filler characters
+            web = web.replace("&quot;", "")
 
-        #Gets urls from source page
-        while line:
-                line = line.partition('"')
-                urls.append(line[0])
-                line = line[2].partition('"url":"')
-                line = line[2]
+            #Get first url
+            line = web.partition('"url":"')
+            line = line[2].partition(":true}};")[0]
+
+            #Gets urls from source page
+            while line:
+                    line = line.partition('"')
+                    urls.append(line[0])
+                    line = line[2].partition('"url":"')
+                    line = line[2]
 
         #Gives list of indexed dispensaries
         return self.raid_dispensaries(urls)
@@ -715,16 +720,18 @@ while True:
         print()
         print()
 links = []
-regions = open("regions.txt", "a+")
+reg_links = []
+regions = open("regions.txt", "r").readlines()
+for item in regions:
+    reg_links.append(item.split('\n'))
 while True:
     print("Please enter a weedmaps.com region link or enter '1' to use regions.txt")
     print("Example: https://weedmaps.com/dispensaries/in/california/east-bay")
     inp = input()
     if inp == "1":
-        for line in regions:
-            if 'weedmaps.com' in line:
-                links.append(line)
-                break
+        for line in reg_links:
+            if 'weedmaps.com' in line[0]:
+                links.append(line[0])
             else:
                 print("Please enter a valid link")
                 print()
