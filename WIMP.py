@@ -1,13 +1,11 @@
 
 __author__ = 'Daniel A. R. Evans'
 
-import sys
 from tkinter import *
 import os.path
 from tkinter import ttk
 from urllib.request import urlopen
 from getpass import getpass
-import math
 
 #SAMPLE LINK
 #https://weedmaps.com/dispensaries/in/california/east-bay
@@ -410,11 +408,11 @@ class dispensary:
 
     #Gets the mode price based on the given amount
     def get_mode_price(self, amount, stuff=[], *args):
-        prices = self.sort_by_amount(amount,stuff)
+        prices = self.sort_by_amount(amount, stuff)
         return self.mode(prices)
 
     def get_high_price(self, amount, stuff=[], *args):
-        prices = self.sort_by_amount(amount,stuff)
+        prices = self.sort_by_amount(amount, stuff)
         return self.high(prices)
 
     def get_low_price(self, amount, stuff=[], *args):
@@ -676,7 +674,7 @@ class main:
 
         for item in stores:
             a = float(item.get_mode_oz())
-            if 0 < 0 < a < low:
+            if 0 < a < low:
                 low = a
         for item in stores:
             if low == float(item.get_mode_oz()):
