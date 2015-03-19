@@ -178,7 +178,7 @@ class dispensary:
         #Empty stuff. Why?
         mode_price = 0
         for p in stuff:
-            if stuff.count(p) > top:
+            if stuff.count(p) > top and stuff.count(p) > 2:
 
                 top = stuff.count(p)
                 mode_price = p
@@ -490,7 +490,7 @@ class dispensary:
         name = source.partition('itemprop="name">')
         name = name[2].partition('<')
         self.name = name[0]
-        print(self.name + " has begun processing")
+        print(self.name + " has been processed")
         split = source.partition("data-category-id")
         first = split[0] + split[1]
         theRest = split[2]
@@ -557,10 +557,15 @@ class main:
     def raid_dispensaries(self, url = [], *args):
         dip = []
         var = 1
+        print(len(url).__str__() + " dispensaries to process")
         for link in url:
-            print(var.__str__() + " out of " + len(url).__str__())
-            var += 1
             dip.append(dispensary(link))
+            print("%.2f" % (var/len(url)))
+            if var == len(url):
+                print("Finalizing The Data")
+            #print(var.__str__() + " out of " + len(url).__str__())
+            var += 1
+
         return dip
 
     def get_dispensaries(self):
@@ -617,8 +622,20 @@ class main:
                     line = line[2].partition('"url":"')
                     line = line[2]
 
+        urls = self.remove_duplicates(urls)
         #Gives list of indexed dispensaries
         return self.raid_dispensaries(urls)
+
+    def remove_duplicates(self, pages = [], *args):
+        output = []
+        seen = set()
+        for value in pages:
+            # If value has not been encountered yet,
+            # ... add it to both list and set.
+            if value not in seen:
+                output.append(value)
+                seen.add(value)
+        return output
 
     def get_lowest_mode_gram(self, stores = [], *args):
         low = 100000
@@ -750,6 +767,7 @@ while True:
         else:
             print("Please enter a valid link")
             print()
+            regions.close()
 m = main(links)
 while True:
 
@@ -842,8 +860,9 @@ while True:
                 print("Please check 'results.txt' in the folder you ran this program from.")
                 print()
                 print("Print a different item? y/n")
-                inp = input()
-                if inp != "y":
+                inp = input().lower()
+                if inp[:1] != "y":
+                    file.close()
                     break
 
         if inp == "3":
@@ -857,61 +876,71 @@ while True:
                     var += 1
                 chosen_dispensary = int(input())-1
 
-                print()
-                print("Pick a category:")
-                print()
-                print("1. Weed")
-                print("2. Wax")
-                print("3. Concentrates")
-                print("4. Edibles")
-                print("5. Prerolls")
-                print("6. Drinks")
-                print("7. Seeds")
-                print("8. Clones")
-                print("9. Topicals")
-                print("10. Tinctures")
-                inp = input()
+                while True:
+                    print()
+                    print("Pick a category:")
+                    print()
+                    print("1. Weed")
+                    print("2. Wax")
+                    print("3. Concentrates")
+                    print("4. Edibles")
+                    print("5. Prerolls")
+                    print("6. Drinks")
+                    print("7. Seeds")
+                    print("8. Clones")
+                    print("9. Topicals")
+                    print("10. Tinctures")
+                    print("11. All")
+                    inp = input()
 
-                if inp == "1":
-                    inp = "weed"
-                if inp == "2":
-                    inp = "wax"
-                if inp == "3":
-                    inp = "concentrates"
-                if inp == "4":
-                    inp = "edible"
-                if inp == "5":
-                    inp = "preroll"
-                if inp == "6":
-                    inp = "drink"
-                if inp == "7":
-                    inp = "seed"
-                if inp == "8":
-                    inp = "clone"
-                if inp == "9":
-                    inp = "topical"
-                if inp == "10":
-                    inp = "tincture"
+                    if inp == "1":
+                        inp = "weed"
+                    if inp == "2":
+                        inp = "wax"
+                    if inp == "3":
+                        inp = "concentrates"
+                    if inp == "4":
+                        inp = "edible"
+                    if inp == "5":
+                        inp = "preroll"
+                    if inp == "6":
+                        inp = "drink"
+                    if inp == "7":
+                        inp = "seed"
+                    if inp == "8":
+                        inp = "clone"
+                    if inp == "9":
+                        inp = "topical"
+                    if inp == "10":
+                        inp = "tincture"
 
-                #Make Method to print list of strains at dispensary
-                print()
-                m.get_dispensaries()[chosen_dispensary].print_menu_list(inp, file)
+                    #Make Method to print list of strains at dispensary
+                    print()
+                    if inp == 11:
+                        for x in range(1, 11):
+                            m.get_dispensaries()[chosen_dispensary].print_menu_list(x, file)
+                    else:
+                        m.get_dispensaries()[chosen_dispensary].print_menu_list(inp, file)
+                    print("Pick another item?")
+                    inp = input().lower()
+                    if inp[:1] != "y":
+                        break
                 print("Please check 'results.txt' in the folder you ran this program from.")
-
+                file.close()
                 print("Pick another dispensary? y/n")
-                inp = input()
-                if inp.lower() != "y":
+                inp = input().lower()
+                if inp[:1] != "y":
                     break
-        file.close()
+
         if inp == "4":
             break
         print("Use same data again? y/n")
         inp = input().lower()
-        if inp != "y":
+        if inp[:1] != "y":
             break
         else:
             print()
             print("Press Enter to Continue")
-            inp = input()
+            input()
     break
 #Comment Section
