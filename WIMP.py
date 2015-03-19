@@ -560,7 +560,7 @@ class main:
         print(len(url).__str__() + " dispensaries to process")
         for link in url:
             dip.append(dispensary(link))
-            print("%.2f" % (var/len(url)))
+            print("%.2f" % (var/len(url)*100) + "%")
             if var == len(url):
                 print("Finalizing The Data")
             #print(var.__str__() + " out of " + len(url).__str__())
