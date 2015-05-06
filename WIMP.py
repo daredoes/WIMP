@@ -5,7 +5,6 @@ from tkinter import *
 import os.path
 from tkinter import ttk
 from urllib.request import urlopen
-from getpass import getpass
 
 #SAMPLE LINK
 #https://weedmaps.com/dispensaries/in/california/east-bay
@@ -726,15 +725,6 @@ class main:
         #self.gui()
         self.disps = self.get_dispensary_urls(link)
 
-while True:
-    inp = getpass()
-    if inp == "419":
-        break
-    else:
-        print("Wrong Password")
-        print("Please Try Again")
-        print()
-        print()
 links = []
 reg_links = []
 if os.path.isfile("regions.txt"):
@@ -749,7 +739,7 @@ while True:
     inp = input()
     if inp == "1":
         for line in reg_links:
-            if 'weedmaps.com' in line[0]:
+            if 'weedmaps.com/dispensaries/' in line[0]:
                 links.append(line[0])
             else:
                 print("Please enter a valid link")
@@ -924,9 +914,9 @@ while True:
                     print("Pick another item?")
                     inp = input().lower()
                     if inp[:1] != "y":
+                        file.close()
                         break
                 print("Please check 'results.txt' in the folder you ran this program from.")
-                file.close()
                 print("Pick another dispensary? y/n")
                 inp = input().lower()
                 if inp[:1] != "y":
